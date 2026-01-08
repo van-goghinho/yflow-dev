@@ -45,7 +45,7 @@ export const Navbar: React.FC = () => {
                 <Link to="#" style={linkStyle}>Tarifs</Link>
                 <Link to="/auth" style={linkStyle}>Connexion</Link>
                 <button
-                    onClick={() => navigate('/auth')}
+                    onClick={() => navigate('/auth?view=signup')}
                     className="btn-primary"
                     style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem' }}
                 >

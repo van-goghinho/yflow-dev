@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import '../styles/Auth.css';
 import { LoginForm } from '../components/LoginForm';
 import { SignupForm } from '../components/SignupForm';
@@ -7,7 +8,9 @@ import { ForgotPasswordForm } from '../components/ForgotPasswordForm';
 type AuthView = 'LOGIN' | 'SIGNUP' | 'FORGOT_PASSWORD';
 
 export const AuthPage: React.FC = () => {
-    const [view, setView] = useState<AuthView>('LOGIN');
+    const [searchParams] = useSearchParams();
+    const initialView = searchParams.get('view') === 'signup' ? 'SIGNUP' : 'LOGIN';
+    const [view, setView] = useState<AuthView>(initialView);
 
     const renderContent = () => {
         switch (view) {

@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
                 {/* Column 2: Produit */}
                 <div style={columnStyle}>
                     <h4 style={headingStyle}>Produit</h4>
-                    <Link to="/app" style={linkStyle}>Workflows</Link>
+                    <Link to="/app/workflows" style={linkStyle}>Workflows</Link>
                     <Link to="#" style={linkStyle}>Intégrations</Link>
                     <Link to="#" style={linkStyle}>Tarifs</Link>
                     <Link to="#" style={linkStyle}>Changelog</Link>

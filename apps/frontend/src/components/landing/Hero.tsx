@@ -52,7 +52,7 @@ export const Hero: React.FC = () => {
 
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                 <button
-                    onClick={() => navigate('/auth')}
+                    onClick={() => navigate('/auth?view=signup')}
                     className="btn-primary"
                     style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
                 >
