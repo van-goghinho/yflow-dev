@@ -9,6 +9,7 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const { showToast } = useToast();
@@ -73,14 +74,37 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
 
             <div className="form-group">
                 <label className="form-label">Mot de passe</label>
-                <input
-                    type="password"
-                    className="form-input"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    required
-                />
+                <div style={{ position: 'relative' }}>
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-input"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        required
+                        style={{ paddingRight: '2.5rem' }}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                            position: 'absolute',
+                            right: '0.8rem',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            fontSize: '1.2rem',
+                            opacity: 0.6,
+                            transition: 'opacity 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                        onMouseLeave={(e) => e.currentTarget.style.opacity = '0.6'}
+                    >
+                        {showPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                </div>
             </div>
 
             <div className="forgot-password">

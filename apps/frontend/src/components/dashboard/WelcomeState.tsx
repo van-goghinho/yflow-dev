@@ -1,8 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export const WelcomeState: React.FC = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+
+    // Extract first name from full name (e.g., "Jean Dupont" -> "Jean")
+    const firstName = user?.name?.split(' ')[0] || 'Utilisateur';
 
     return (
         <div style={{
@@ -28,7 +33,7 @@ export const WelcomeState: React.FC = () => {
                 fontWeight: 'bold',
                 marginBottom: '1rem'
             }}>
-                Bienvenue sur <span style={{ color: 'var(--color-primary)' }}>Y'Flow</span>, Utilisateur !
+                Bienvenue sur <span style={{ color: 'var(--color-primary)' }}>Y'Flow</span>, {firstName} !
             </h2>
 
             <p style={{
