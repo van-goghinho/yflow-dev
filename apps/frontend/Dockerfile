@@ -1,28 +1,31 @@
 # Build stage
 FROM node:18-alpine AS builder
 
-WORKDIR /app
+WORKDIR /monorepo
 
-# Copier package.json et package-lock.json
+# Copier les fichiers package du monorepo (racine)
 COPY package*.json ./
+COPY tsconfig.base.json* ./
 
-# Installer les dépendances
+# Copier tous les workspaces nécessaires
+COPY packages ./packages
+COPY apps/frontend ./apps/frontend
+
+# Installer toutes les dépendances du monorepo
 RUN npm ci
 
-# Copier le code source
-COPY . .
-
-# Build de production
+# Build du frontend
+WORKDIR /monorepo/apps/frontend
 RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
 # Copier les fichiers buildés
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /monorepo/apps/frontend/dist /usr/share/nginx/html
 
 # Copier la config Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY apps/frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exposer le port 80
 EXPOSE 80
