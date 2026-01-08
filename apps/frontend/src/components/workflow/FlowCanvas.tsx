@@ -7,7 +7,6 @@ import ReactFlow, {
     Controls,
     Background,
     type Connection,
-    type Edge,
     MarkerType,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
