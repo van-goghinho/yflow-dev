@@ -8,7 +8,7 @@ export const SettingsPage: React.FC = () => {
     const [activeTab, setActiveTab] = useState<SettingsTab>('PROFILE');
 
     return (
-        <div>
+        <div style={{ padding: '2rem', height: '100%', overflowY: 'auto' }}>
             <h2 style={{ fontSize: '1.8rem', marginBottom: '2rem' }}>Paramètres</h2>
 
             <div style={{ display: 'flex', gap: '2rem', height: 'calc(100vh - 200px)' }}>

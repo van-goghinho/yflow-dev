@@ -139,7 +139,7 @@ export const DashboardLayout: React.FC = () => {
                 </header>
 
                 {/* Page Content */}
-                <div style={{ padding: '2rem', overflowY: 'auto', flex: 1 }}>
+                <div style={{ padding: 0, overflowY: 'hidden', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <Outlet />
                 </div>
                 <Footer />

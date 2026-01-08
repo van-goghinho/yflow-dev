@@ -10,7 +10,7 @@ export const DashboardPage: React.FC = () => {
     }
 
     return (
-        <div>
+        <div style={{ padding: '2rem', height: '100%', overflowY: 'auto' }}>
             <h2 style={{ fontSize: '1.8rem', marginBottom: '2rem' }}>Tableau de bord</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
                 <StatCard title="Workflows Actifs" value="0" />

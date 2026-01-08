@@ -19,8 +19,7 @@ export const Footer: React.FC = () => {
             }}>
                 {/* Column 1: Brand */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    {/* Simple Brand Mark Placeholder */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                    <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', textDecoration: 'none', color: 'inherit' }}>
                         <div style={{
                             width: '32px',
                             height: '32px',
@@ -36,7 +35,7 @@ export const Footer: React.FC = () => {
                             Y
                         </div>
                         <span style={{ fontSize: '1.5rem', fontWeight: 'bold', letterSpacing: '-0.5px' }}>Y'Flow</span>
-                    </div>
+                    </Link>
 
                     <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
                         L'automatisation sans limites.<br />

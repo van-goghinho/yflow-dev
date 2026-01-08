@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 interface LoginFormProps {
     onForgotPassword: () => void;
@@ -11,13 +12,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
     const [error, setError] = useState<string | null>(null);
 
     const { showToast } = useToast();
+    const { login } = useAuth();
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         return emailRegex.test(email);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
 
@@ -27,8 +29,28 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
             return;
         }
 
-        console.log('Login attempt', { email, password });
-        showToast("Connexion réussie", "success");
+        try {
+            const response = await fetch('http://localhost:3000/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                if (response.status === 401) throw new Error('Identifiants incorrects');
+                throw new Error('Erreur de connexion');
+            }
+
+            const data = await response.json();
+            // Login in context + Redirect (handled in context)
+            login(data.access_token, data.user);
+            showToast("Connexion réussie", "success");
+
+        } catch (err: any) {
+            console.error(err);
+            setError(err.message || "Une erreur est survenue");
+            showToast(err.message || "Erreur de connexion", "error");
+        }
     };
 
     return (
