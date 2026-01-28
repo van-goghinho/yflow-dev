@@ -2,7 +2,7 @@ import requests
 import json
 
 # --- CONFIGURATION ---
-TOKEN = 'figd_M9xjDJ4lE4FydV7JMOa5C0jT82eUKMi2cLI5GE8e'
+TOKEN = 'figd_M9xjDJ4lE4FydV7JMOa5C0jT82eUKMi2cLI5GE8e' #expire le 28/04/2026
 FILE_KEY = 'LFGoVUDSE0NvxwVcj5aZ2t'
 
 def export_figjam_workflow():
