@@ -1,0 +1,254 @@
+{
+    "file_name": "Workflow",
+    "elements": [
+        {
+            "id": "2:44",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Reception du brouillon",
+            "color": {
+                "r": 0.4000000059604645,
+                "g": 0.8352941274642944,
+                "b": 0.4588235318660736,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "2:54",
+            "type": "CONNECTOR",
+            "from": "17:69",
+            "to": "17:69",
+            "label": ""
+        },
+        {
+            "id": "2:62",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Extraction des données par l’IA",
+            "color": {
+                "r": 0.239215686917305,
+                "g": 0.6784313917160034,
+                "b": 1.0,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "2:75",
+            "type": "CONNECTOR",
+            "from": "17:69",
+            "to": "17:69",
+            "label": ""
+        },
+        {
+            "id": "2:80",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Est-ce que les données sont présentes ?",
+            "color": {
+                "r": 1.0,
+                "g": 0.6196078658103943,
+                "b": 0.25882354378700256,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "5:126",
+            "type": "CONNECTOR",
+            "from": "17:69",
+            "to": "17:69",
+            "label": "NON"
+        },
+        {
+            "id": "5:152",
+            "type": "CONNECTOR",
+            "from": "17:69",
+            "to": "17:69",
+            "label": "OUI"
+        },
+        {
+            "id": "5:157",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Formatage en JSON",
+            "color": {
+                "r": 0.239215686917305,
+                "g": 0.6784313917160034,
+                "b": 1.0,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "5:176",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Alerte : Texte incomplet",
+            "color": {
+                "r": 0.9490196108818054,
+                "g": 0.2823529541492462,
+                "b": 0.13333334028720856,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "5:195",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "JSON Final prêt",
+            "color": {
+                "r": 0.4000000059604645,
+                "g": 0.8352941274642944,
+                "b": 0.4588235318660736,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "5:222",
+            "type": "CONNECTOR",
+            "from": "17:69",
+            "to": "17:69",
+            "label": ""
+        },
+        {
+            "id": "5:230",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "5:239",
+            "type": "TEXT",
+            "text": "Workflow n°1 : Extracteur de données structurées",
+            "color": {
+                "r": 0.11764705926179886,
+                "g": 0.11764705926179886,
+                "b": 0.11764705926179886,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "5:243",
+            "type": "TEXT",
+            "text": "Workflow n°2",
+            "color": {
+                "r": 0.11764705926179886,
+                "g": 0.11764705926179886,
+                "b": 0.11764705926179886,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:254",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Email entrant",
+            "color": {
+                "r": 0.4000000059604645,
+                "g": 0.8352941274642944,
+                "b": 0.4588235318660736,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:268",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "6:273",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Mistral  : Classification IA",
+            "color": {
+                "r": 0.239215686917305,
+                "g": 0.6784313917160034,
+                "b": 1.0,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:294",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "6:299",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Quel est le type de message ?",
+            "color": {
+                "r": 1.0,
+                "g": 0.7882353067398071,
+                "b": 0.26274511218070984,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:330",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "6:338",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "6:351",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "6:363",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Plainte : réponse excuse auto",
+            "color": {
+                "r": 0.529411792755127,
+                "g": 0.30980393290519714,
+                "b": 1.0,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:394",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Devis : alerte slack commercial",
+            "color": {
+                "r": 0.529411792755127,
+                "g": 0.30980393290519714,
+                "b": 1.0,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:401",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Spam → Archiver",
+            "color": {
+                "r": 0.4588235318660736,
+                "g": 0.4588235318660736,
+                "b": 0.4588235318660736,
+                "a": 1.0
+            }
+        },
+        {
+            "id": "6:408",
+            "type": "CONNECTOR",
+            "from": "0:1",
+            "to": "0:1",
+            "label": ""
+        },
+        {
+            "id": "6:413",
+            "type": "SHAPE_WITH_TEXT",
+            "text": "Message traité",
+            "color": {
+                "r": 0.4000000059604645,
+                "g": 0.8352941274642944,
+                "b": 0.4588235318660736,
+                "a": 1.0
+            }
+        }
+    ]
+}
