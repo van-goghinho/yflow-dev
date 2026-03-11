@@ -1,4 +1,4 @@
-name: Deploy Frontend to VPS
+name: Build Frontend Image
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}/frontend
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -47,31 +47,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            # Login au registry
-            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
-
-            # Pull la nouvelle image
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
-            # Arrêter et supprimer l'ancien conteneur
-            docker stop yflow-frontend || true
-            docker rm yflow-frontend || true
-
-            # Lancer le nouveau conteneur
-            docker run -d \
-              --name yflow-frontend \
-              --network npm_default \
-              --restart unless-stopped \
-              -p 3000:80 \
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
-            # Nettoyer les anciennes images
-            docker image prune -f
