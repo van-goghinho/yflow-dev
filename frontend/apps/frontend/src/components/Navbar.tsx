@@ -21,7 +21,7 @@ export const Navbar: React.FC = () => {
             borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
         }}>
             {/* Brand */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', textDecoration: 'none', color: 'inherit' }}>
                 <div style={{
                     width: '32px',
                     height: '32px',
@@ -37,12 +37,11 @@ export const Navbar: React.FC = () => {
                     Y
                 </div>
                 <span style={{ fontSize: '1.5rem', fontWeight: 'bold', letterSpacing: '-0.5px' }}>Y'Flow</span>
-            </div>
+            </Link>
 
             {/* Navigation */}
             <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
                 <Link to="#" style={linkStyle}>Fonctionnalités</Link>
-                <Link to="#" style={linkStyle}>Tarifs</Link>
                 <Link to="/auth" style={linkStyle}>Connexion</Link>
                 <button
                     onClick={() => navigate('/auth?view=signup')}

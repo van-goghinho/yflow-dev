@@ -148,19 +148,49 @@ export const About: React.FC = () => {
                     {ABOUT_CONTENT.architectureDescription}
                 </p>
 
-                {/* Architecture Diagram Placeholder */}
+                {/* Architecture Diagram */}
                 <div style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '2px dashed rgba(255,255,255,0.1)',
-                    borderRadius: '16px',
-                    padding: '3rem',
-                    color: 'rgba(255,255,255,0.3)',
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold'
+                    marginTop: '2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '2rem'
                 }}>
-                    {ABOUT_CONTENT.architectureDiagram}
-                    <div style={{ fontSize: '0.9rem', marginTop: '1rem', fontWeight: 'normal', whiteSpace: 'pre-line' }}>
-                        {ABOUT_CONTENT.architectureFlow}
+                    {/* Level 1: Frontend */}
+                    <div style={archBoxStyle}>
+                        <span style={archIconStyle}>💻</span>
+                        <strong>Frontend (React/Vite)</strong>
+                    </div>
+
+                    {/* Arrow */}
+                    <div style={arrowStyle}>↕️ API REST</div>
+
+                    {/* Level 2: Backend */}
+                    <div style={{ ...archBoxStyle, borderColor: 'var(--color-primary)' }}>
+                        <span style={archIconStyle}>⚙️</span>
+                        <strong>Backend (NestJS)</strong>
+                    </div>
+
+                    {/* Level 3: Services */}
+                    <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                            <div style={arrowStyle}>↕️ ORM</div>
+                            <div style={archBoxStyle}>
+                                <span style={archIconStyle}>🗄️</span>
+                                <strong>PostgreSQL</strong>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                            <div style={arrowStyle}>↕️ API</div>
+                            <div style={archBoxStyle}>
+                                <span style={archIconStyle}>⚡</span>
+                                <strong>n8n Engine</strong>
+                                <div style={{ fontSize: '0.8rem', opacity: 0.7, marginTop: '0.5rem' }}>
+                                    ⬇️<br />Mistral AI
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -228,3 +258,26 @@ const TechStack: React.FC<{ category: string; technologies: string[] }> = ({ cat
         </ul>
     </div>
 );
+
+const archBoxStyle: React.CSSProperties = {
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: '12px',
+    padding: '1rem 2rem',
+    minWidth: '200px',
+    textAlign: 'center',
+    color: 'white',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+};
+
+const archIconStyle: React.CSSProperties = {
+    fontSize: '1.5rem',
+    display: 'block',
+    marginBottom: '0.5rem'
+};
+
+const arrowStyle: React.CSSProperties = {
+    color: 'var(--color-text-muted)',
+    fontSize: '0.8rem',
+    fontWeight: 'bold'
+};

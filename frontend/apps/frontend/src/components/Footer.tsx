@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import githubIcon from '../assets/github.svg';
 
 export const Footer: React.FC = () => {
     return (
@@ -42,25 +43,47 @@ export const Footer: React.FC = () => {
                         Simplifiez vos workflows dès aujourd'hui.
                     </p>
 
-                    {/* Social Placeholders */}
+                    {/* Social - GitHub Only */}
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        {['𝕏', 'in', 'Gh', 'Yt'].map((icon, i) => (
-                            <div key={i} style={{
-                                width: '36px',
-                                height: '36px',
-                                borderRadius: '50%',
-                                background: 'rgba(255,255,255,0.05)',
+                        <a
+                            href="https://github.com/van-goghinho/yflow-dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center',
+                                gap: '0.6rem',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '30px',
+                                background: 'rgba(255,255,255,0.05)',
+                                border: '1px solid rgba(255,255,255,0.1)',
                                 cursor: 'pointer',
+                                textDecoration: 'none',
+                                transition: 'all 0.2s'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = 'white';
+                                e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                                const span = e.currentTarget.querySelector('span');
+                                if (span) span.style.color = 'white';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                                e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                                const span = e.currentTarget.querySelector('span');
+                                if (span) span.style.color = '#aab0bd';
+                            }}
+                        >
+                            <img src={githubIcon} alt="GitHub" style={{ width: '20px', height: '20px', opacity: 0.9 }} />
+                            <span style={{
                                 color: '#aab0bd',
                                 fontSize: '0.9rem',
-                                border: '1px solid rgba(255,255,255,0.1)'
+                                fontWeight: 500,
+                                transition: 'color 0.2s'
                             }}>
-                                {icon}
-                            </div>
-                        ))}
+                                GitHub
+                            </span>
+                        </a>
                     </div>
                 </div>
 
@@ -69,8 +92,6 @@ export const Footer: React.FC = () => {
                     <h4 style={headingStyle}>Produit</h4>
                     <Link to="/app/workflows" style={linkStyle}>Workflows</Link>
                     <Link to="#" style={linkStyle}>Intégrations</Link>
-                    <Link to="#" style={linkStyle}>Tarifs</Link>
-                    <Link to="#" style={linkStyle}>Changelog</Link>
                 </div>
 
                 {/* Column 3: Ressources */}
@@ -78,8 +99,6 @@ export const Footer: React.FC = () => {
                     <h4 style={headingStyle}>Ressources</h4>
                     <Link to="#" style={linkStyle}>Documentation</Link>
                     <Link to="#" style={linkStyle}>Tutoriels</Link>
-                    <Link to="#" style={linkStyle}>Communauté</Link>
-                    <Link to="#" style={linkStyle}>Blog</Link>
                 </div>
 
                 {/* Column 4: Légal & Contact */}

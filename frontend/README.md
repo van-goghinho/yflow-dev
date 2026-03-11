@@ -33,3 +33,37 @@
 - **Documentation** : Décorateurs Swagger sur chaque endpoint du contrôleur.
 - **Architecture** : Séparation stricte entre les Contrôleurs (entrées/sorties) et les Services (logique métier).
 - **Sécurité** : Gestion des configurations via `@nestjs/config` (fichiers .env).
+
+## 6. Installation et Démarrage Rapide
+
+### Pré-requis
+- Node.js v20+
+- npm v10+
+
+### Installation
+Le projet est entièrement contenu dans le dossier `frontend` (Monorepo).
+
+```bash
+# 1. Se placer dans le dossier du projet
+cd frontend
+
+# 2. Installer les dépendances
+npm install
+```
+
+### Lancer le développement
+```bash
+# Lancer le Frontend (Vite) + Backend (NestJS) en parallèle (si configuré)
+# Pour l'instant, lancement du frontend seul :
+npm run dev
+```
+
+### Structure des Dossiers
+```
+frontend/
+├── apps/
+│   ├── frontend/  # Application React (Vite)
+│   └── backend/   # API NestJS
+├── packages/      # Bibliothèques partagées
+└── package.json   # Gestionnaire de workspaces
+```

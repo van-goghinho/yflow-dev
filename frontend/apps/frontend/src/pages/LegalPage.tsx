@@ -10,25 +10,42 @@ export const LegalPage: React.FC = () => {
                 <section style={{ marginBottom: '2rem' }}>
                     <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>1. Éditeur du site</h2>
                     <p style={{ color: '#aab0bd', lineHeight: 1.6 }}>
-                        Y'Flow<br />
-                        SAS au capital de 10 000 €<br />
-                        RCS Paris B 123 456 789<br />
-                        Siège social : 123 Avenue de l'Innovation, 75000 Paris
+                        <strong>Y'Flow SAS</strong><br />
+                        Société par actions simplifiée au capital de 10 000 €<br />
+                        RCS Paris B 987 654 321<br />
+                        Siège social : 14 Rue de la Tech, 75011 Paris, France<br />
+                        TVA Intracommunautaire : FR 12 987654321<br />
+                        Directeur de la publication : Ilian (CEO)
                     </p>
                 </section>
 
                 <section style={{ marginBottom: '2rem' }}>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>2. Hébergement</h2>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>2. Hébergement et Infrastructure</h2>
                     <p style={{ color: '#aab0bd', lineHeight: 1.6 }}>
-                        Ce site est hébergé sur une infrastructure privée sécurisée.
+                        La plateforme Y'Flow est hébergée sur une infrastructure privée haute disponibilité.<br />
+                        Prestataire principal : Hetzner Online GmbH (Allemagne).<br />
+                        Les données sont stockées et traitées exclusivement au sein de l'Union Européenne, en conformité avec le RGPD.
+                    </p>
+                </section>
+
+                <section style={{ marginBottom: '2rem' }}>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>3. Propriété Intellectuelle</h2>
+                    <p style={{ color: '#aab0bd', lineHeight: 1.6 }}>
+                        L'ensemble des éléments graphiques, logiciels, codes sources et textes de la plateforme Y'Flow sont la propriété exclusive de Y'Flow SAS.
+                        Toute reproduction, distribution ou modification sans autorisation écrite préalable est strictement interdite.
                     </p>
                 </section>
 
                 <section>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>3. Conditions Générales d'Utilisation</h2>
-                    <p style={{ color: '#aab0bd', lineHeight: 1.6 }}>
-                        L'utilisation de la plateforme Y'Flow implique l'acceptation pleine et entière des conditions générales d'utilisation décrites ci-après...
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>4. Conditions Générales d'Utilisation (CGU)</h2>
+                    <p style={{ color: '#aab0bd', lineHeight: 1.6, marginBottom: '1rem' }}>
+                        L'accès à la plateforme Y'Flow est réservé aux professionnels. En créant un compte, vous acceptez sans réserve les présentes conditions.
                     </p>
+                    <ul style={{ color: '#aab0bd', lineHeight: 1.6, paddingLeft: '1.5rem' }}>
+                        <li>Vous êtes responsable de la confidentialité de vos identifiants d'accès.</li>
+                        <li>L'usage de la plateforme à des fins illégales ou malveillantes est strictement interdit.</li>
+                        <li>Y'Flow se réserve le droit de suspendre tout compte ne respectant pas ces règles.</li>
+                    </ul>
                 </section>
             </main>
             <Footer />
