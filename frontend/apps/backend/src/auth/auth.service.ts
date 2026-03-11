@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -15,8 +16,8 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials');
         }
 
-        // In real app, use bcrypt.compare here
-        if (user.password !== pass) {
+        const isPasswordValid = await bcrypt.compare(pass, user.password);
+        if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid credentials');
         }
 
@@ -33,8 +34,10 @@ export class AuthService {
             throw new ConflictException('User already exists');
         }
 
-        // In real app, increment salt and hash password here
-        const newUser = await this.usersService.create({ email, password: pass, name });
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(pass, salt);
+
+        const newUser = await this.usersService.create({ email, password: hashedPassword, name });
 
         return {
             message: 'User created successfully',
