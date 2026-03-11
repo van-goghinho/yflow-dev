@@ -2,10 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateWorkflowDto } from './dto/create-workflow.dto';
 import { UpdateWorkflowDto } from './dto/update-workflow.dto';
+import { N8nService } from '../n8n/n8n.service';
 
 @Injectable()
 export class WorkflowsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly n8nService: N8nService,
+  ) {}
 
   async create(userId: string, createWorkflowDto: CreateWorkflowDto) {
     return this.prisma.workflow.create({
@@ -56,11 +60,19 @@ export class WorkflowsService {
 
   async run(id: string) {
     const workflow = await this.findOne(id);
-    // TODO: Call n8n API to trigger workflow
+    
+    // Call n8n logic
+    // We assume the workflow id is also the webhook id or we just trigger the generic webhook endpoint
+    const n8nResponse = await this.n8nService.executeWebhook(id, {
+      workflowId: id,
+      name: workflow.name,
+      triggerTime: new Date().toISOString()
+    });
+
     return {
-      message: 'Workflow execution triggered (mock)',
+      message: 'Workflow execution triggered via n8n',
       workflowId: workflow.id,
-      status: 'pending'
+      n8nResponse,
     };
   }
 }
