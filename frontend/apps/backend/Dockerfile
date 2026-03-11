@@ -1,7 +1,7 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
-COPY apps/backend/package*.json ./
-RUN npm ci
+COPY apps/backend/package.json ./
+RUN npm install
 COPY apps/backend/prisma ./prisma
 RUN npx prisma generate
 COPY apps/backend/tsconfig*.json ./
