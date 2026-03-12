@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from './ToastContext';
 import { api } from '../services/api';
 
 interface User {
@@ -35,7 +34,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { showToast } = useToast();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
