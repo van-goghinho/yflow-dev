@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { Footer } from '../components/Footer';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useAuth } from '../context/AuthContext';
 
 export const DashboardLayout: React.FC = () => {
-    const navigate = useNavigate();
+    const { logout, user } = useAuth();
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleLogout = () => {
-        // TODO: Clear session
-        navigate('/auth');
+        logout();
     };
 
     const closeSidebar = () => {
@@ -73,6 +73,9 @@ export const DashboardLayout: React.FC = () => {
                     <Link to="/app" className="nav-item" style={navItemStyle} onClick={closeSidebar}>
                         📊 Tableau de bord
                     </Link>
+                    <Link to="/app/gallery" className="nav-item" style={navItemStyle} onClick={closeSidebar}>
+                        🎨 Galerie
+                    </Link>
                     <Link to="/app/workflows" className="nav-item" style={navItemStyle} onClick={closeSidebar}>
                         ⚡ Workflows
                     </Link>
@@ -120,7 +123,7 @@ export const DashboardLayout: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         {!isMobile && (
                             <span style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
-                                Utilisateur Demo
+                                {user?.name || user?.email || ''}
                             </span>
                         )}
                         <div style={{
@@ -133,7 +136,7 @@ export const DashboardLayout: React.FC = () => {
                             justifyContent: 'center',
                             fontWeight: 'bold'
                         }}>
-                            U
+                            {(user?.name || user?.email || 'U').charAt(0).toUpperCase()}
                         </div>
                     </div>
                 </header>

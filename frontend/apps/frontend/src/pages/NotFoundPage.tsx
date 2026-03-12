@@ -17,7 +17,7 @@ export const NotFoundPage: React.FC = () => {
             <p style={{ color: '#aab0bd', marginBottom: '2rem' }}>
                 La page que vous recherchez semble avoir disparu dans le néant.
             </p>
-            <Link to="/app" className="btn-primary" style={{ textDecoration: 'none', padding: '0.8rem 2rem', display: 'inline-block' }}>
+            <Link to="/" className="btn-primary" style={{ textDecoration: 'none', padding: '0.8rem 2rem', display: 'inline-block' }}>
                 Retour à l'accueil
             </Link>
         </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar: React.FC = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     return (
         <nav style={{
@@ -42,14 +44,22 @@ export const Navbar: React.FC = () => {
             {/* Navigation */}
             <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
                 <Link to="#" style={linkStyle}>Fonctionnalités</Link>
-                <Link to="/auth" style={linkStyle}>Connexion</Link>
-                <button
-                    onClick={() => navigate('/auth?view=signup')}
-                    className="btn-primary"
-                    style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem' }}
-                >
-                    S'inscrire
-                </button>
+                {isAuthenticated ? (
+                    <Link to="/app" className="btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', textDecoration: 'none' }}>
+                        Mon Dashboard
+                    </Link>
+                ) : (
+                    <>
+                        <Link to="/auth" style={linkStyle}>Connexion</Link>
+                        <button
+                            onClick={() => navigate('/auth?view=signup')}
+                            className="btn-primary"
+                            style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem' }}
+                        >
+                            S'inscrire
+                        </button>
+                    </>
+                )}
             </div>
         </nav>
     );

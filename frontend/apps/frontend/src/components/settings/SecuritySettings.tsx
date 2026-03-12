@@ -1,23 +1,46 @@
 import React, { useState } from 'react';
-
 import { useToast } from '../../context/ToastContext';
+import { api } from '../../services/api';
 
 export const SecuritySettings: React.FC = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { showToast } = useToast();
 
-    const handleSave = () => {
-        console.log('Update password attempt');
-        showToast('Mot de passe mis à jour', 'success');
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (newPassword !== confirmPassword) {
+            showToast('Les nouveaux mots de passe ne correspondent pas', 'error');
+            return;
+        }
+
+        if (newPassword.length < 8) {
+            showToast('Le nouveau mot de passe doit contenir au moins 8 caractères', 'error');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            await api.updatePassword(currentPassword, newPassword);
+            showToast('Mot de passe mis à jour avec succès', 'success');
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+        } catch (err: any) {
+            showToast(err.message || 'Erreur lors de la mise à jour du mot de passe', 'error');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <div style={{ padding: '1rem' }}>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 600 }}>Sécurité</h3>
 
-            <div style={{ marginBottom: '2rem', maxWidth: '500px' }}>
+            <form onSubmit={handleSave} style={{ marginBottom: '2rem', maxWidth: '500px' }}>
                 <h4 style={{ fontSize: '1rem', marginBottom: '1rem', color: 'var(--color-text-muted)' }}>Changer le mot de passe</h4>
 
                 <div className="form-group">
@@ -27,6 +50,8 @@ export const SecuritySettings: React.FC = () => {
                         className="form-input"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
+                        required
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -37,6 +62,8 @@ export const SecuritySettings: React.FC = () => {
                         className="form-input"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -47,13 +74,20 @@ export const SecuritySettings: React.FC = () => {
                         className="form-input"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        disabled={isLoading}
                     />
                 </div>
 
-                <button onClick={handleSave} className="btn-primary" style={{ marginTop: '0.5rem' }}>
-                    Mettre à jour
+                <button
+                    type="submit"
+                    className="btn-primary"
+                    style={{ marginTop: '0.5rem', opacity: isLoading ? 0.6 : 1 }}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Mise à jour...' : 'Mettre à jour'}
                 </button>
-            </div>
+            </form>
 
             <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '2rem', maxWidth: '500px' }}>
                 <h4 style={{ fontSize: '1rem', marginBottom: '1rem', color: 'var(--color-text-muted)' }}>Authentification à deux facteurs (2FA)</h4>

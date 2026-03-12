@@ -1,23 +1,47 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
+import { api } from '../../services/api';
 
 export const ProfileSettings: React.FC = () => {
-    const [name, setName] = useState('Utilisateur Demo');
-    const [email, setEmail] = useState('demo@yflow.com');
+    const { user } = useAuth();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { showToast } = useToast();
 
-    const handleSave = () => {
-        // Mock save
-        console.log('Saved profile:', { name, email });
-        showToast('Profil mis à jour avec succès', 'success');
+    useEffect(() => {
+        // Prefill from JWT context first, then fetch from API for freshest data
+        if (user) {
+            setName(user.name || '');
+            setEmail(user.email || '');
+        }
+        api.getMe().then((data: any) => {
+            setName(data.name || '');
+            setEmail(data.email || '');
+        }).catch(console.error);
+    }, [user]);
+
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            await api.updateProfile({ name, email });
+            showToast('Profil mis à jour avec succès', 'success');
+        } catch (err: any) {
+            showToast(err.message || 'Erreur lors de la mise à jour', 'error');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
+    const initials = name?.charAt(0).toUpperCase() || 'U';
+
     return (
-        <div style={{ padding: '1rem' }}>
+        <form onSubmit={handleSave} style={{ padding: '1rem' }}>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 600 }}>Mon Profil</h3>
 
-            {/* Avatar Placeholder */}
+            {/* Avatar */}
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2rem' }}>
                 <div style={{
                     width: '80px',
@@ -31,19 +55,8 @@ export const ProfileSettings: React.FC = () => {
                     fontWeight: 'bold',
                     marginRight: '1.5rem'
                 }}>
-                    U
+                    {initials}
                 </div>
-                <button
-                    className="btn-primary"
-                    style={{
-                        padding: '0.5rem 1rem',
-                        background: 'transparent',
-                        border: '1px solid var(--color-border)',
-                        color: 'var(--color-text-main)'
-                    }}
-                >
-                    Changer l'avatar
-                </button>
             </div>
 
             <div className="form-group" style={{ maxWidth: '500px' }}>
@@ -53,6 +66,7 @@ export const ProfileSettings: React.FC = () => {
                     className="form-input"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    disabled={isLoading}
                 />
             </div>
 
@@ -63,12 +77,18 @@ export const ProfileSettings: React.FC = () => {
                     className="form-input"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoading}
                 />
             </div>
 
-            <button onClick={handleSave} className="btn-primary" style={{ marginTop: '1rem' }}>
-                Enregistrer les changements
+            <button
+                type="submit"
+                className="btn-primary"
+                style={{ marginTop: '1rem', opacity: isLoading ? 0.6 : 1 }}
+                disabled={isLoading}
+            >
+                {isLoading ? 'Enregistrement...' : 'Enregistrer les changements'}
             </button>
-        </div>
+        </form>
     );
 };

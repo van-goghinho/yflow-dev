@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { ApiError } from '../services/api';
 
 interface PasswordRequirement {
     label: string;
@@ -13,9 +16,11 @@ export const SignupForm: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
+    // const [isSuccess, setIsSuccess] = useState(false); // TODO: Re-enable with email verification
 
     const { showToast } = useToast();
+    const { signup } = useAuth();
+    const navigate = useNavigate();
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -67,49 +72,53 @@ export const SignupForm: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:3000/auth/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, name }),
-            });
+            await signup(email, password, name);
 
-            if (!response.ok) {
-                if (response.status === 409) throw new Error('Cet email est déjà utilisé');
-                throw new Error("Erreur lors de l'inscription");
-            }
+            showToast("Compte créé avec succès ! Vous pouvez maintenant vous connecter.", "success");
 
-            // Success: Switch to confirmation view
-            setIsSuccess(true);
-            showToast("Compte créé avec succès", "success");
+            // TODO: Uncomment when email verification is configured
+            // setIsSuccess(true);
+
+            // Redirect to login
+            navigate('/auth');
 
         } catch (err: any) {
             console.error(err);
-            setError(err.message || "Une erreur est survenue");
-            showToast(err.message || "Erreur d'inscription", "error");
+            let msg: string;
+            if (err instanceof ApiError) {
+                if (err.status === 0) msg = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
+                else if (err.status === 409) msg = 'Un compte avec cet email existe déjà.';
+                else msg = 'Une erreur est survenue. Veuillez réessayer.';
+            } else {
+                msg = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
+            }
+            setError(msg);
+            showToast(msg, 'error');
         } finally {
             setIsLoading(false);
         }
     };
 
-    if (isSuccess) {
-        return (
-            <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✉️</div>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'white' }}>Vérifiez vos emails</h3>
-                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', lineHeight: 1.6 }}>
-                    Un lien de confirmation a été envoyé à <strong>{email}</strong>.<br />
-                    Veuillez cliquer dessus pour activer votre compte.
-                </p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="btn-primary"
-                    style={{ background: 'transparent', border: '1px solid var(--color-border)' }}
-                >
-                    Retour à la connexion
-                </button>
-            </div>
-        );
-    }
+    // TODO: Activate when email verification service is configured
+    // if (isSuccess) {
+    //     return (
+    //         <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+    //             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✉️</div>
+    //             <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'white' }}>Vérifiez vos emails</h3>
+    //             <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', lineHeight: 1.6 }}>
+    //                 Un lien de confirmation a été envoyé à <strong>{email}</strong>.<br />
+    //                 Veuillez cliquer dessus pour activer votre compte.
+    //             </p>
+    //             <button
+    //                 onClick={() => window.location.reload()}
+    //                 className="btn-primary"
+    //                 style={{ background: 'transparent', border: '1px solid var(--color-border)' }}
+    //             >
+    //                 Retour à la connexion
+    //             </button>
+    //         </div>
+    //     );
+    // }
 
     const requirements = getPasswordRequirements(password);
     const showRequirements = password.length > 0;

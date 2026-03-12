@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useToast } from '../context/ToastContext';
 import { useAuth } from '../context/AuthContext';
+import { ApiError } from '../services/api';
 
 interface LoginFormProps {
     onForgotPassword: () => void;
@@ -10,7 +11,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { showToast } = useToast();
     const { login } = useAuth();
@@ -31,26 +34,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (!response.ok) {
-                if (response.status === 401) throw new Error('Identifiants incorrects');
-                throw new Error('Erreur de connexion');
-            }
-
-            const data = await response.json();
-            // Login in context + Redirect (handled in context)
-            login(data.access_token, data.user);
+            setIsLoading(true);
+            await login(email, password, rememberMe);
             showToast("Connexion réussie", "success");
 
         } catch (err: any) {
             console.error(err);
-            setError(err.message || "Une erreur est survenue");
-            showToast(err.message || "Erreur de connexion", "error");
+            let msg: string;
+            if (err instanceof ApiError) {
+                if (err.status === 0) msg = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
+                else if (err.status === 401) msg = 'Identifiants incorrects. Vérifiez votre email et mot de passe.';
+                else msg = 'Une erreur est survenue. Veuillez réessayer.';
+            } else {
+                msg = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
+            }
+            setError(msg);
+            showToast(msg, 'error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -107,18 +108,27 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                 </div>
             </div>
 
-            <div className="forgot-password">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
+                    <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        style={{ accentColor: 'var(--color-primary)', width: '16px', height: '16px', cursor: 'pointer' }}
+                    />
+                    Rester connecté
+                </label>
                 <span
                     className="clickable"
                     onClick={onForgotPassword}
-                    style={{ cursor: 'pointer', color: 'inherit' }}
+                    style={{ cursor: 'pointer', color: 'var(--color-text-muted)', fontSize: '0.9rem' }}
                 >
                     Mot de passe oublié ?
                 </span>
             </div>
 
-            <button type="submit" className="btn-primary">
-                Se connecter
+            <button type="submit" className="btn-primary" disabled={isLoading} style={{ opacity: isLoading ? 0.6 : 1 }}>
+                {isLoading ? 'Connexion...' : 'Se connecter'}
             </button>
         </form>
     );
