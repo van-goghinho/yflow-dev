@@ -9,6 +9,7 @@ import { ContactPage } from './pages/ContactPage';
 import { LandingPage } from './pages/LandingPage';
 import { WorkflowEditorPage } from './pages/WorkflowEditorPage';
 import { GalleryPage } from './pages/GalleryPage';
+import { WorkflowRunPage } from './pages/WorkflowRunPage';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/legal" element={<LegalPage />} />
             <Route path="/cgu" element={<LegalPage />} />
+            <Route path="/confidentialite" element={<LegalPage />} />
             <Route path="/contact" element={<ContactPage />} />
 
             {/* Auth pages — redirect to /app if already logged in */}
@@ -36,6 +38,7 @@ function App() {
               <Route path="/app" element={<DashboardLayout />}>
                 <Route index element={<DashboardPage />} />
                 <Route path="gallery" element={<GalleryPage />} />
+                <Route path="workflows/:id/run" element={<WorkflowRunPage />} />
                 <Route path="workflows" element={<WorkflowEditorPage />} />
                 <Route path="settings" element={<SettingsPage />} />
               </Route>

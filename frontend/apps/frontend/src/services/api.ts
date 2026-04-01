@@ -44,6 +44,7 @@ export const api = {
     fetchApi('/users/me/password', { method: 'PUT', body: JSON.stringify({ currentPassword, newPassword }) }),
 
   // Workflows
+  getPublicWorkflows: () => fetchApi('/workflows/public'),
   getWorkflows: () => fetchApi('/workflows'),
   getWorkflow: (id: string) => fetchApi(`/workflows/${id}`),
   createWorkflow: (data: any) =>

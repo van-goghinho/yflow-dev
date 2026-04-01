@@ -22,11 +22,23 @@ export class WorkflowsService {
   }
 
   async findAll(userId: string) {
-    // Return all workflows for now, will filter by user when auth is fully setup
-    // For now we just return all workflows since auth might not be fully functional yet
-    // return this.prisma.workflow.findMany({ where: { userId } });
     return this.prisma.workflow.findMany({
-      where: userId ? { userId } : undefined,
+      where: { userId },
+    });
+  }
+
+  async findPublic() {
+    return this.prisma.workflow.findMany({
+      where: { isPublic: true },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        webhookPath: true,
+        definition: true,
+        createdAt: true,
+      },
     });
   }
 
@@ -35,13 +47,13 @@ export class WorkflowsService {
       where: { id },
     });
     if (!workflow) {
-      throw new NotFoundException(`Workflow with ID ${id} not found`);
+      throw new NotFoundException(`Workflow introuvable`);
     }
     return workflow;
   }
 
   async update(id: string, updateWorkflowDto: UpdateWorkflowDto) {
-    await this.findOne(id); // Check existence
+    await this.findOne(id);
     return this.prisma.workflow.update({
       where: { id },
       data: {
@@ -52,27 +64,25 @@ export class WorkflowsService {
   }
 
   async remove(id: string) {
-    await this.findOne(id); // Check existence
+    await this.findOne(id);
     return this.prisma.workflow.delete({
       where: { id },
     });
   }
 
-  async run(id: string) {
+  async run(id: string, inputs: Record<string, any>) {
     const workflow = await this.findOne(id);
-    
-    // Call n8n logic
-    // We assume the workflow id is also the webhook id or we just trigger the generic webhook endpoint
-    const n8nResponse = await this.n8nService.executeWebhook(id, {
-      workflowId: id,
-      name: workflow.name,
-      triggerTime: new Date().toISOString()
-    });
+
+    if (!workflow.webhookPath) {
+      throw new NotFoundException("Ce workflow n'a pas de webhook configuré");
+    }
+
+    const n8nResponse = await this.n8nService.executeWebhook(workflow.webhookPath, inputs);
 
     return {
-      message: 'Workflow execution triggered via n8n',
+      message: 'Workflow exécuté avec succès',
       workflowId: workflow.id,
-      n8nResponse,
+      result: Array.isArray(n8nResponse) ? n8nResponse[0]?.result : n8nResponse?.result,
     };
   }
 }

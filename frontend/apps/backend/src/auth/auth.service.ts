@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -29,6 +29,17 @@ export class AuthService {
     }
 
     async signUp(email: string, pass: string, name: string): Promise<any> {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email || !emailRegex.test(email)) {
+            throw new BadRequestException('Adresse email invalide');
+        }
+        if (!pass || pass.length < 8) {
+            throw new BadRequestException('Le mot de passe doit contenir au moins 8 caractères');
+        }
+        if (!name || name.trim().length < 2) {
+            throw new BadRequestException('Le nom doit contenir au moins 2 caractères');
+        }
+
         const existingUser = await this.usersService.findOne(email);
         if (existingUser) {
             throw new ConflictException('User already exists');
