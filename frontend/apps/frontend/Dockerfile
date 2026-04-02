@@ -16,6 +16,8 @@ RUN npm ci
 
 # Build du frontend
 WORKDIR /monorepo/apps/frontend
+ARG VITE_API_URL=http://localhost:3001/api
+ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build
 
 # Production stage
