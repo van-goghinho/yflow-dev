@@ -43,29 +43,16 @@ export const WelcomeState: React.FC = () => {
                 marginBottom: '2.5rem',
                 lineHeight: 1.6
             }}>
-                Vous n'avez pas encore de workflow actif. Lancez votre première automatisation dès maintenant et laissez l'IA faire le travail.
+                Vous n'avez pas encore lancé de workflow. Parcourez la galerie pour découvrir nos automatisations prêtes à l'emploi.
             </p>
 
             <div style={{ display: 'flex', gap: '1rem', flexDirection: 'column', alignItems: 'center' }}>
                 <button
-                    onClick={() => navigate('/app/workflows')}
+                    onClick={() => navigate('/app/gallery')}
                     className="btn-primary"
                     style={{ padding: '0.8rem 2rem', fontSize: '1.1rem' }}
                 >
-                    Créer mon premier workflow
-                </button>
-
-                <button
-                    style={{
-                        background: 'transparent',
-                        border: 'none',
-                        color: 'var(--color-text-muted)',
-                        textDecoration: 'underline',
-                        cursor: 'pointer',
-                        marginTop: '0.5rem'
-                    }}
-                >
-                    Consulter la documentation
+                    Découvrir la galerie
                 </button>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { WelcomeState } from '../components/dashboard/WelcomeState';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -35,31 +36,16 @@ export const DashboardPage: React.FC = () => {
                     Bienvenue, <strong style={{ color: 'white' }}>{user.name}</strong> 👋
                 </p>
             )}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
-                <StatCard
-                    title="Workflows"
-                    value={isLoading ? '...' : String(workflowCount ?? 0)}
-                    icon="⚡"
-                />
-            </div>
+            <p style={{ color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>
+                Rendez-vous dans la galerie pour lancer un nouveau workflow.
+            </p>
+            <Link
+                to="/app/gallery"
+                className="btn-primary"
+                style={{ display: 'inline-block', padding: '0.7rem 1.5rem', textDecoration: 'none' }}
+            >
+                Ouvrir la galerie
+            </Link>
         </div>
     );
 };
-
-const StatCard: React.FC<{ title: string; value: string; icon?: string }> = ({ title, value, icon }) => (
-    <div style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.05)',
-        borderRadius: '16px',
-        padding: '1.5rem',
-        display: 'flex',
-        gap: '1rem',
-        alignItems: 'flex-start'
-    }}>
-        {icon && <div style={{ fontSize: '1.5rem' }}>{icon}</div>}
-        <div>
-            <h3 style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>{title}</h3>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{value}</div>
-        </div>
-    </div>
-);

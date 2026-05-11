@@ -110,16 +110,3 @@
     color: hsl(var(--color-secondary));
     text-decoration: underline;
 }
-
-.forgot-password {
-    display: block;
-    text-align: right;
-    font-size: 0.85rem;
-    color: hsl(var(--color-text-muted));
-    margin-bottom: 1.5rem;
-    margin-top: -1rem;
-}
-
-.forgot-password:hover {
-    color: hsl(var(--color-text-main));
-}
