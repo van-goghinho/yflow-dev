@@ -11,11 +11,15 @@ export class WorkflowsService {
     private readonly n8nService: N8nService,
   ) {}
 
-  async create(userId: string, createWorkflowDto: CreateWorkflowDto) {
+  async create(userId: string, dto: CreateWorkflowDto) {
     return this.prisma.workflow.create({
       data: {
-        name: createWorkflowDto.name,
-        definition: createWorkflowDto.definition,
+        name: dto.name,
+        definition: dto.definition,
+        description: dto.description,
+        category: dto.category,
+        webhookPath: dto.webhookPath,
+        isPublic: dto.isPublic ?? false,
         userId,
       },
     });
@@ -42,36 +46,49 @@ export class WorkflowsService {
     });
   }
 
-  async findOne(id: string) {
-    const workflow = await this.prisma.workflow.findUnique({
-      where: { id },
+  async findOne(id: string, userId: string) {
+    const workflow = await this.prisma.workflow.findFirst({
+      where: { id, userId },
     });
     if (!workflow) {
-      throw new NotFoundException(`Workflow introuvable`);
+      throw new NotFoundException('Workflow introuvable');
     }
     return workflow;
   }
 
-  async update(id: string, updateWorkflowDto: UpdateWorkflowDto) {
-    await this.findOne(id);
+  async update(id: string, userId: string, dto: UpdateWorkflowDto) {
+    await this.findOne(id, userId);
     return this.prisma.workflow.update({
       where: { id },
       data: {
-        name: updateWorkflowDto.name,
-        definition: updateWorkflowDto.definition,
+        name: dto.name,
+        definition: dto.definition,
+        description: dto.description,
+        category: dto.category,
+        webhookPath: dto.webhookPath,
+        isPublic: dto.isPublic,
       },
     });
   }
 
-  async remove(id: string) {
-    await this.findOne(id);
+  async remove(id: string, userId: string) {
+    await this.findOne(id, userId);
     return this.prisma.workflow.delete({
       where: { id },
     });
   }
 
-  async run(id: string, inputs: Record<string, any>) {
-    const workflow = await this.findOne(id);
+  async run(id: string, userId: string, inputs: Record<string, any>) {
+    const workflow = await this.prisma.workflow.findFirst({
+      where: {
+        id,
+        OR: [{ userId }, { isPublic: true }],
+      },
+    });
+
+    if (!workflow) {
+      throw new NotFoundException('Workflow introuvable');
+    }
 
     if (!workflow.webhookPath) {
       throw new NotFoundException("Ce workflow n'a pas de webhook configuré");
