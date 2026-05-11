@@ -91,12 +91,18 @@ export const SecuritySettings: React.FC = () => {
 
             <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '2rem', maxWidth: '500px' }}>
                 <h4 style={{ fontSize: '1rem', marginBottom: '1rem', color: 'var(--color-text-muted)' }}>Authentification à deux facteurs (2FA)</h4>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', opacity: 0.6 }}>
                     <div>
                         <div style={{ fontWeight: 'bold' }}>2FA désactivé</div>
-                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Ajoutez une couche de sécurité supplémentaire.</div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Bientôt disponible — une couche de sécurité supplémentaire pour votre compte.</div>
                     </div>
-                    <button className="btn-primary" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>Activer</button>
+                    <button
+                        disabled
+                        className="btn-primary"
+                        style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', cursor: 'not-allowed' }}
+                    >
+                        Bientôt
+                    </button>
                 </div>
             </div>
         </div>

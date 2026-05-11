@@ -90,24 +90,17 @@ export const Footer: React.FC = () => {
                 {/* Column 2: Produit */}
                 <div style={columnStyle}>
                     <h4 style={headingStyle}>Produit</h4>
-                    <Link to="/app/workflows" style={linkStyle}>Workflows</Link>
-                    <Link to="#" style={linkStyle}>Intégrations</Link>
+                    <Link to="/app/gallery" style={linkStyle}>Galerie</Link>
+                    <a href="/#features" style={linkStyle}>Fonctionnalités</a>
                 </div>
 
-                {/* Column 3: Ressources */}
-                <div style={columnStyle}>
-                    <h4 style={headingStyle}>Ressources</h4>
-                    <Link to="#" style={linkStyle}>Documentation</Link>
-                    <Link to="#" style={linkStyle}>Tutoriels</Link>
-                </div>
-
-                {/* Column 4: Légal & Contact */}
+                {/* Column 3: Légal & Contact */}
                 <div style={columnStyle}>
                     <h4 style={headingStyle}>Entreprise</h4>
                     <Link to="/contact" style={linkStyle}>Contact</Link>
                     <Link to="/legal" style={linkStyle}>Mentions Légales</Link>
                     <Link to="/cgu" style={linkStyle}>CGU</Link>
-                    <Link to="#" style={linkStyle}>Confidentialité</Link>
+                    <Link to="/confidentialite" style={linkStyle}>Confidentialité</Link>
                 </div>
             </div>
 

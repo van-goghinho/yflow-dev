@@ -3,9 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import '../styles/Auth.css';
 import { LoginForm } from '../components/LoginForm';
 import { SignupForm } from '../components/SignupForm';
-import { ForgotPasswordForm } from '../components/ForgotPasswordForm';
 
-type AuthView = 'LOGIN' | 'SIGNUP' | 'FORGOT_PASSWORD';
+type AuthView = 'LOGIN' | 'SIGNUP';
 
 export const AuthPage: React.FC = () => {
     const [searchParams] = useSearchParams();
@@ -21,7 +20,7 @@ export const AuthPage: React.FC = () => {
                             <h1 className="auth-title">Y'Flow</h1>
                             <p className="auth-subtitle">Ravi de vous revoir sur votre espace</p>
                         </div>
-                        <LoginForm onForgotPassword={() => setView('FORGOT_PASSWORD')} />
+                        <LoginForm />
                         <div className="auth-footer">
                             Pas encore de compte ?
                             <span
@@ -54,8 +53,6 @@ export const AuthPage: React.FC = () => {
                         </div>
                     </>
                 );
-            case 'FORGOT_PASSWORD':
-                return <ForgotPasswordForm onBack={() => setView('LOGIN')} />;
         }
     };
 

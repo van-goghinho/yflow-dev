@@ -3,11 +3,7 @@ import { useToast } from '../context/ToastContext';
 import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../services/api';
 
-interface LoginFormProps {
-    onForgotPassword: () => void;
-}
-
-export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
+export const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +15,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
     const { login } = useAuth();
 
     const validateEmail = (email: string) => {
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email);
     };
 
@@ -108,7 +104,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+            <div style={{ marginBottom: '0.5rem' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
                     <input
                         type="checkbox"
@@ -118,13 +114,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                     />
                     Rester connecté
                 </label>
-                <span
-                    className="clickable"
-                    onClick={onForgotPassword}
-                    style={{ cursor: 'pointer', color: 'var(--color-text-muted)', fontSize: '0.9rem' }}
-                >
-                    Mot de passe oublié ?
-                </span>
             </div>
 
             <button type="submit" className="btn-primary" disabled={isLoading} style={{ opacity: isLoading ? 0.6 : 1 }}>

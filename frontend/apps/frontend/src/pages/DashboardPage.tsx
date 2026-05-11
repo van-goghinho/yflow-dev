@@ -41,8 +41,6 @@ export const DashboardPage: React.FC = () => {
                     value={isLoading ? '...' : String(workflowCount ?? 0)}
                     icon="⚡"
                 />
-                <StatCard title="Exécutions (24h)" value="—" icon="🔄" />
-                <StatCard title="Taux de succès" value="—" icon="✅" />
             </div>
         </div>
     );

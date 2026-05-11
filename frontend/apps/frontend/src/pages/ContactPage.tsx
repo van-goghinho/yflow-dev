@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Footer } from '../components/Footer';
 
 export const ContactPage: React.FC = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
-    const [sent, setSent] = useState(false);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setSent(true);
-    };
-
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <main style={{ flex: 1, padding: '4rem 2rem', maxWidth: '800px', margin: '0 auto', width: '100%' }}>
@@ -59,93 +49,24 @@ export const ContactPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Formulaire de contact */}
                 <div style={{
                     background: 'rgba(255,255,255,0.03)',
                     border: '1px solid rgba(255,255,255,0.07)',
                     borderRadius: '12px',
                     padding: '2rem',
+                    textAlign: 'center',
                 }}>
-                    <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: 'white' }}>Envoyer un message</h2>
-
-                    {sent ? (
-                        <div style={{
-                            textAlign: 'center',
-                            padding: '2rem',
-                            color: '#6ee7b7',
-                        }}>
-                            <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>✅</div>
-                            <p style={{ margin: 0, fontWeight: 500 }}>Message envoyé !</p>
-                            <p style={{ color: '#aab0bd', marginTop: '0.5rem', fontSize: '0.9rem' }}>
-                                Nous reviendrons vers vous dès que possible.
-                            </p>
-                            <button
-                                onClick={() => { setSent(false); setName(''); setEmail(''); setMessage(''); }}
-                                style={{
-                                    marginTop: '1rem',
-                                    background: 'transparent',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    color: 'var(--color-text-muted)',
-                                    padding: '0.5rem 1.2rem',
-                                    borderRadius: '6px',
-                                    cursor: 'pointer',
-                                    fontSize: '0.9rem',
-                                }}
-                            >
-                                Nouveau message
-                            </button>
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <div className="form-group">
-                                <label className="form-label">Nom</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="Votre nom"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Email</label>
-                                <input
-                                    type="email"
-                                    className="form-input"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="votre@email.com"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Message</label>
-                                <textarea
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    placeholder="Votre message..."
-                                    required
-                                    rows={5}
-                                    style={{
-                                        width: '100%',
-                                        background: 'rgba(255,255,255,0.05)',
-                                        border: '1px solid rgba(255,255,255,0.1)',
-                                        borderRadius: '8px',
-                                        padding: '0.75rem',
-                                        color: 'white',
-                                        fontSize: '0.95rem',
-                                        resize: 'vertical',
-                                        outline: 'none',
-                                        boxSizing: 'border-box',
-                                    }}
-                                />
-                            </div>
-                            <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
-                                Envoyer
-                            </button>
-                        </form>
-                    )}
+                    <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'white' }}>Envoyer un message</h2>
+                    <p style={{ color: '#aab0bd', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
+                        Pour toute question ou demande, contactez l'équipe directement par email.
+                    </p>
+                    <a
+                        href="mailto:yflowprojet@gmail.com?subject=Contact%20Y'Flow"
+                        className="btn-primary"
+                        style={{ display: 'inline-block', textDecoration: 'none' }}
+                    >
+                        Écrire un email
+                    </a>
                 </div>
             </main>
             <Footer />

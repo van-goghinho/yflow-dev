@@ -20,7 +20,7 @@ export const Features: React.FC = () => {
     ];
 
     return (
-        <section style={{ background: '#13161c', padding: '100px 2rem' }}>
+        <section id="features" style={{ background: '#13161c', padding: '100px 2rem' }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                 <h2 style={{
                     textAlign: 'center',

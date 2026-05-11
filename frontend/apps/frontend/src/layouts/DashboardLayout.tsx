@@ -76,9 +76,6 @@ export const DashboardLayout: React.FC = () => {
                     <Link to="/app/gallery" className="nav-item" style={navItemStyle} onClick={closeSidebar}>
                         🎨 Galerie
                     </Link>
-                    <Link to="/app/workflows" className="nav-item" style={navItemStyle} onClick={closeSidebar}>
-                        ⚡ Workflows
-                    </Link>
                     <Link to="/app/settings" className="nav-item" style={navItemStyle} onClick={closeSidebar}>
                         ⚙️ Paramètres
                     </Link>

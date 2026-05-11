@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
 
             {/* Navigation */}
             <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-                <Link to="#" style={linkStyle}>Fonctionnalités</Link>
+                <a href="/#features" style={linkStyle}>Fonctionnalités</a>
                 {isAuthenticated ? (
                     <Link to="/app" className="btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', textDecoration: 'none' }}>
                         Mon Dashboard

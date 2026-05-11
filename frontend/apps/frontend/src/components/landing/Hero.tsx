@@ -59,6 +59,10 @@ export const Hero: React.FC = () => {
                     Commencer gratuitement
                 </button>
                 <button
+                    onClick={() => {
+                        const el = document.getElementById('features');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     style={{
                         padding: '1rem 2.5rem',
                         fontSize: '1.1rem',
@@ -71,7 +75,7 @@ export const Hero: React.FC = () => {
                         transition: 'all 0.2s'
                     }}
                 >
-                    Voir la démo
+                    En savoir plus
                 </button>
             </div>
 
